@@ -1,10 +1,11 @@
 import { Router } from "express";
 import { generateQRCode, getQRCodeByVehicle, getQRCodeById } from "../controllers/qrcode.controller";
+import { authMiddleware } from "../middleware/auth.middleware";
 
 const router = Router();
 
-router.post("/", generateQRCode);  // ✅ Route de création du QR Code
-router.get("/vehicle/:vehicleId", getQRCodeByVehicle); // ✅ Récupération via vehicleId
-router.get("/:id", getQRCodeById); // ✅ Récupération par ID
+router.post("/", authMiddleware, generateQRCode); 
+router.get("/vehicle/:vehicleId", authMiddleware, getQRCodeByVehicle); 
+router.get("/:id", authMiddleware, getQRCodeById); 
 
 export default router;
